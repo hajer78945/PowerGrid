@@ -211,7 +211,7 @@ D.
 C
 
 
-## 数据结构与算法
+## 二、数据结构与算法
 
 1. 采用顺序查找法查找长度为n的顺序表时，查找成功的平均查找长度为
 
@@ -264,7 +264,7 @@ A.
 只要确定了入栈序列，就可以确定出栈序列
 
 B.
-栈是一种操作受限的线性表，只允许在其两端进行操作
+栈是一种操作受限的线性表，只允许在其两端进行操作 `栈：后进先出。所以为一端`
 
 C.
 采用非递归方式重写递归程序时，必须使用栈
@@ -274,6 +274,81 @@ D.
 
 正确答案：
 D
+
+```java
+举个简单的例子，假设有一个入栈序列1, 2, 3。这里有几种不同的出栈情况可能发生：
+
+    如果我们在每个元素入栈后立即出栈，那么出栈序列将是3, 2, 1。
+    如果我们让1和2入栈，然后出栈2，入栈3，然后依次出栈3和1，出栈序列将是2, 3, 1。
+    如果我们让所有元素入栈，然后依次出栈，出栈序列将是3, 2, 1。
+
+//普通递归版本
+public class Factorial {
+   public static void main(String[] args) {
+        // 示例：计算5的阶乘
+        int result = factorial(5);
+        System.out.println("5! = " + result);
+    }
+    // 定义一个递归方法来计算阶乘
+    public static int factorial(int n) {
+        // 基本情况
+        if (n == 0) {
+            return 1;
+        }
+        // 递归步骤
+        else {
+            return n * factorial(n - 1);
+        }
+    }
+}
+
+//使用栈stack版本 
+import java.util.Stack;
+public class FactorialWithStack {    
+    public static int factorial(int n) {
+        // 创建一个栈来存储中间结果
+        Stack<Integer> stack = new Stack<>();        
+        // 将n到1的所有数依次入栈
+        while (n > 0) {
+            stack.push(n);
+            n--;
+        }        
+        // 初始化结果为1
+        int result = 1;        
+        // 遍历栈，依次弹出所有元素并进行乘法运算
+        while (!stack.isEmpty()) {
+            result *= stack.pop();
+        }        
+        return result;
+    }
+    public static void main(String[] args) {
+        // 示例：计算5的阶乘
+        int result = factorial(5);
+        System.out.println("5! = " + result);
+    }
+}
+
+//不使用递归不使用栈版本
+public class FactorialNonRecursive {
+    // 定义一个非递归方法来计算阶乘
+    public static int factorial(int n) {
+        int result = 1;
+        for (int i = 1; i <= n; i++) {
+            result *= i;
+        }
+        return result;
+    }
+    public static void main(String[] args) {
+        // 示例：计算5的阶乘
+        int result = factorial(5);
+        System.out.println("5! = " + result);
+    }
+}
+```
+
+
+
+
 
 
 
